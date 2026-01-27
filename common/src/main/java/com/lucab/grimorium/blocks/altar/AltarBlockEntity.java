@@ -28,6 +28,9 @@ import org.jetbrains.annotations.Nullable;
 public class AltarBlockEntity extends BlockEntity {
     private ItemStack item = ItemStack.EMPTY;
 
+    private int progress = 0;
+    private int maxProgress = 0;
+
     public AltarBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlocks.ALTAR_BLOCK_ENTITY.get(), pos, state);
     }
@@ -74,27 +77,33 @@ public class AltarBlockEntity extends BlockEntity {
 
         if (recipe.isPresent()) {
             AltarRecipe r = recipe.get().value();
+            blockEntity.maxProgress = r.getProcessTime();
+            blockEntity.progress++;
+            if (blockEntity.progress >= blockEntity.maxProgress) { // Consume catalyst
+                blockEntity.removeItem();
 
-            // Consume catalyst
-            blockEntity.removeItem();
-
-            // Consume inputs
-            List<PedestalBlockEntity> remainingPedestals = new ArrayList<>(pedestals);
-            for (Ingredient ingredient : r.getInputs()) {
-                for (int i = 0; i < remainingPedestals.size(); i++) {
-                    PedestalBlockEntity ped = remainingPedestals.get(i);
-                    if (ingredient.test(ped.getItem())) {
-                        ped.removeItem();
-                        remainingPedestals.remove(i);
-                        break;
+                // Consume inputs
+                List<PedestalBlockEntity> remainingPedestals = new ArrayList<>(pedestals);
+                for (Ingredient ingredient : r.getInputs()) {
+                    for (int i = 0; i < remainingPedestals.size(); i++) {
+                        PedestalBlockEntity ped = remainingPedestals.get(i);
+                        if (ingredient.test(ped.getItem())) {
+                            ped.removeItem();
+                            remainingPedestals.remove(i);
+                            break;
+                        }
                     }
                 }
-            }
 
-            // Pop result
-            ItemStack result = r.assemble(input, level.registryAccess());
-            ItemEntity entity = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, result);
-            level.addFreshEntity(entity);
+                // Pop result
+                ItemStack result = r.assemble(input, level.registryAccess());
+                ItemEntity entity = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, result);
+                level.addFreshEntity(entity);
+
+                blockEntity.progress = 0;
+            }
+        } else {
+            blockEntity.progress = 0;
         }
     }
 
@@ -104,7 +113,7 @@ public class AltarBlockEntity extends BlockEntity {
         if (!item.isEmpty()) {
             tag.put("Item", item.save(registries));
         } else {
-            tag.putBoolean("Empty", true);
+            tag.put("Item", new CompoundTag());
         }
     }
 

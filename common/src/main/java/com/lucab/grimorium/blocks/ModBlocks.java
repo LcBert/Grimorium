@@ -25,7 +25,9 @@ public class ModBlocks {
     // Altar
     public static final RegistrySupplier<Block> ALTAR_BLOCK = BLOCKS
             .register("altar",
-                    () -> new AltarBlock(BlockBehaviour.Properties.of().strength(3.5F)));
+                    () -> new AltarBlock(BlockBehaviour.Properties.of()
+                            .strength(3.5F)
+                            .noOcclusion()));
 
     public static final RegistrySupplier<BlockEntityType<AltarBlockEntity>> ALTAR_BLOCK_ENTITY = BLOCK_ENTITIES
             .register("altar",
@@ -38,7 +40,9 @@ public class ModBlocks {
     // Pedestal
     public static final RegistrySupplier<Block> PEDESTAL_BLOCK = BLOCKS
             .register("pedestal",
-                    () -> new PedestalBlock(BlockBehaviour.Properties.of().strength(3.5F)));
+                    () -> new PedestalBlock(BlockBehaviour.Properties.of()
+                            .strength(3.5F)
+                            .noOcclusion()));
 
     public static final RegistrySupplier<BlockEntityType<PedestalBlockEntity>> PEDESTAL_BLOCK_ENTITY = BLOCK_ENTITIES
             .register("pedestal",

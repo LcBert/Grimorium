@@ -22,7 +22,7 @@ public class PedestalBlockEntityRenderer implements BlockEntityRenderer<Pedestal
         ItemStack itemStack = blockEntity.getItem();
         if (!itemStack.isEmpty()) {
             poseStack.pushPose();
-            poseStack.translate(0.5D, 1.5D, 0.5F);
+            poseStack.translate(0.5D, 1.5D, 0.5D);
             poseStack.scale(1.5F, 1.5F, 1.5F);
 
             long time = blockEntity.getLevel().getGameTime();

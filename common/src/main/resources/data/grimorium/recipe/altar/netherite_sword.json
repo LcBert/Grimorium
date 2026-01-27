@@ -1,18 +1,19 @@
 {
-  "type": "grimorium:altar",
-  "catalyst": {
-    "item": "minecraft:nether_star"
-  },
-  "inputs": [
-    {
-      "item": "minecraft:diamond"
+    "type": "grimorium:altar",
+    "processTime": 40,
+    "catalyst": {
+        "item": "minecraft:nether_star"
     },
-    {
-      "item": "minecraft:diamond"
+    "inputs": [
+        {
+            "item": "minecraft:diamond"
+        },
+        {
+            "item": "minecraft:diamond"
+        }
+    ],
+    "result": {
+        "id": "minecraft:netherite_sword",
+        "count": 1
     }
-  ],
-  "result": {
-    "id": "minecraft:netherite_sword",
-    "count": 1
-  }
 }

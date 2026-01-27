@@ -23,6 +23,7 @@ public class ModCreativeModeTabs {
                     .displayItems((parameters, output) -> {
                         output.accept(ModItems.RUBIN.get());
                         output.accept(ModBlocks.ALTAR_ITEM.get());
+                        output.accept(ModBlocks.PEDESTAL_ITEM.get());
                     }).build());
 
     public static void register() {

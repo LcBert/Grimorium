@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.lucab.grimorium.recipes.ModRecipes;
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.HolderLookup;
@@ -18,11 +19,13 @@ public class AltarRecipe implements Recipe<RecipeInput> {
     private final Ingredient catalyst;
     private final List<Ingredient> inputs;
     private final ItemStack result;
+    private final int processTime;
 
-    public AltarRecipe(Ingredient catalyst, List<Ingredient> inputs, ItemStack result) {
+    public AltarRecipe(Ingredient catalyst, List<Ingredient> inputs, ItemStack result, int processTime) {
         this.catalyst = catalyst;
         this.inputs = inputs;
         this.result = result;
+        this.processTime = processTime;
     }
 
     public Ingredient getCatalyst() {
@@ -31,6 +34,10 @@ public class AltarRecipe implements Recipe<RecipeInput> {
 
     public List<Ingredient> getInputs() {
         return inputs;
+    }
+
+    public int getProcessTime() {
+        return processTime;
     }
 
     public ItemStack getResult() {
@@ -137,12 +144,15 @@ public class AltarRecipe implements Recipe<RecipeInput> {
         public static final MapCodec<AltarRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 Ingredient.CODEC_NONEMPTY.fieldOf("catalyst").forGetter(AltarRecipe::getCatalyst),
                 Ingredient.CODEC_NONEMPTY.listOf().fieldOf("inputs").forGetter(AltarRecipe::getInputs),
-                ItemStack.CODEC.fieldOf("result").forGetter(AltarRecipe::getResult)).apply(instance, AltarRecipe::new));
+                ItemStack.CODEC.fieldOf("result").forGetter(AltarRecipe::getResult),
+                Codec.INT.fieldOf("processTime").forGetter(AltarRecipe::getProcessTime))
+                .apply(instance, AltarRecipe::new));
 
         public static final StreamCodec<RegistryFriendlyByteBuf, AltarRecipe> STREAM_CODEC = StreamCodec.composite(
                 Ingredient.CONTENTS_STREAM_CODEC, AltarRecipe::getCatalyst,
                 Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()), AltarRecipe::getInputs,
                 ItemStack.STREAM_CODEC, AltarRecipe::getResult,
+                ByteBufCodecs.INT, AltarRecipe::getProcessTime,
                 AltarRecipe::new);
 
         @Override

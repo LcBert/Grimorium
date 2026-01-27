@@ -9,15 +9,25 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class PedestalBlock extends BaseEntityBlock {
     public static final MapCodec<PedestalBlock> CODEC = simpleCodec(PedestalBlock::new);
+    private static final VoxelShape shape1 = Block.box(1, 0, 1, 15, 2, 15);
+    private static final VoxelShape shape2 = Block.box(2, 2, 2, 14, 3, 14);
+    private static final VoxelShape shape3 = Block.box(3, 3, 3, 13, 13, 13);
+    private static final VoxelShape shape4 = Block.box(2, 13, 2, 14, 14, 14);
+    private static final VoxelShape shape5 = Block.box(1, 14, 1, 15, 16, 15);
 
     public PedestalBlock(Properties properties) {
         super(properties);
@@ -57,6 +67,11 @@ public class PedestalBlock extends BaseEntityBlock {
             }
             super.onRemove(state, level, pos, newState, isMoving);
         }
+    }
+
+    @Override
+    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return Shapes.or(shape1, shape2, shape3, shape4, shape5);
     }
 
     @Override

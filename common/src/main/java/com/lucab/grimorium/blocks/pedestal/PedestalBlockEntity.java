@@ -44,7 +44,7 @@ public class PedestalBlockEntity extends BlockEntity {
         if (!item.isEmpty()) {
             tag.put("Item", item.save(registries));
         } else {
-            tag.putBoolean("Empty", true);
+            tag.put("Item", new CompoundTag());
         }
     }
 
