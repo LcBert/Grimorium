@@ -63,7 +63,7 @@ public class AltarBlockEntity extends BlockEntity {
         List<ItemStack> inputs = new ArrayList<>();
         List<PedestalBlockEntity> pedestals = new ArrayList<>();
 
-        BlockPos.betweenClosed(pos.offset(-3, 0, -3), pos.offset(3, 1, 3)).forEach(p -> {
+        BlockPos.betweenClosed(pos.offset(-3, 0, -3), pos.offset(3, 0, 3)).forEach(p -> {
             if (level.getBlockEntity(p) instanceof PedestalBlockEntity pedestal && !pedestal.getItem().isEmpty()) {
                 inputs.add(pedestal.getItem());
                 pedestals.add(pedestal);
