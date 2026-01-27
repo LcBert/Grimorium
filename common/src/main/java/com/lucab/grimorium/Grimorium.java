@@ -8,8 +8,8 @@ public final class Grimorium {
     public static final String MODID = "grimorium";
 
     public static void init() {
-        ModItems.register();
         ModBlocks.register();
+        ModItems.register();
         ModCreativeModeTabs.register();
     }
 }

@@ -19,7 +19,7 @@
             "com.lucab.grimorium.fabric.GrimoriumFabric"
         ],
         "client": [
-            "com.lucab.grimorium.fabric.client.ExampleModFabricClient"
+            "com.lucab.grimorium.fabric.client.GrimoriumFabricClient"
         ]
     },
     "mixins": [
