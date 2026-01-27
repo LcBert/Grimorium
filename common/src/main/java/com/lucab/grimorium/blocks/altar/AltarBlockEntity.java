@@ -11,10 +11,12 @@ import com.lucab.grimorium.recipes.altar.AltarRecipe;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -81,6 +83,46 @@ public class AltarBlockEntity extends BlockEntity {
             if (blockEntity.progress == 0)
                 level.playSound(null, pos, SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS);
 
+            if (level instanceof ServerLevel serverLevel) {
+                for (PedestalBlockEntity pedestal : pedestals) {
+                    BlockPos pedPos = pedestal.getBlockPos();
+                    double startX = pedPos.getX() + 0.5;
+                    double startY = pedPos.getY() + 1.2;
+                    double startZ = pedPos.getZ() + 0.5;
+                    double targetX = pos.getX() + 0.5;
+                    double targetY = pos.getY() + 1.2;
+                    double targetZ = pos.getZ() + 0.5;
+                    double dx = targetX - startX;
+                    double dy = targetY - startY;
+                    double dz = targetZ - startZ;
+                    double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+                    // Particles to altar
+                    serverLevel.sendParticles(
+                            ParticleTypes.WITCH,
+                            targetX, targetY, targetZ,
+                            0,
+                            dx / distance, dy / distance, dz / distance,
+                            0.2);
+
+                    // Particles to pedestals
+                    serverLevel.sendParticles(
+                            ParticleTypes.WITCH,
+                            startX, startY, startZ,
+                            0,
+                            dx / distance, dy / distance, dz / distance,
+                            0.2);
+
+                    // Particles from pedestals to altar
+                    serverLevel.sendParticles(
+                            ParticleTypes.ENCHANT,
+                            targetX, targetY + 0.5, targetZ,
+                            0,
+                            startX - targetX, startY - targetY, startZ - targetZ,
+                            1.0);
+                }
+            }
+
             AltarRecipe r = recipe.get().value();
             blockEntity.maxProgress = r.getProcessTime();
             blockEntity.progress++;
@@ -103,7 +145,8 @@ public class AltarBlockEntity extends BlockEntity {
 
                 // Pop result
                 ItemStack result = r.assemble(input, level.registryAccess());
-                ItemEntity entity = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, result);
+                ItemEntity entity = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5,
+                        result);
                 level.addFreshEntity(entity);
 
                 blockEntity.progress = 0;
