@@ -15,6 +15,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -76,10 +78,14 @@ public class AltarBlockEntity extends BlockEntity {
                 input, level);
 
         if (recipe.isPresent()) {
+            if (blockEntity.progress == 0)
+                level.playSound(null, pos, SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS);
+
             AltarRecipe r = recipe.get().value();
             blockEntity.maxProgress = r.getProcessTime();
             blockEntity.progress++;
             if (blockEntity.progress >= blockEntity.maxProgress) { // Consume catalyst
+                level.playSound(null, pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS);
                 blockEntity.removeItem();
 
                 // Consume inputs
