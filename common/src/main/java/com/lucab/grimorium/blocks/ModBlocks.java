@@ -3,6 +3,8 @@ package com.lucab.grimorium.blocks;
 import com.lucab.grimorium.Grimorium;
 import com.lucab.grimorium.blocks.altar.AltarBlock;
 import com.lucab.grimorium.blocks.altar.AltarBlockEntity;
+import com.lucab.grimorium.blocks.pedestal.PedestalBlock;
+import com.lucab.grimorium.blocks.pedestal.PedestalBlockEntity;
 import com.lucab.grimorium.items.ModItems;
 
 import dev.architectury.registry.registries.DeferredRegister;
@@ -20,15 +22,32 @@ public class ModBlocks {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(Grimorium.MODID,
             Registries.BLOCK_ENTITY_TYPE);
 
-    public static final RegistrySupplier<Block> ALTAR_BLOCK = BLOCKS.register("altar",
-            () -> new AltarBlock(BlockBehaviour.Properties.of().strength(3.5F)));
+    // Altar
+    public static final RegistrySupplier<Block> ALTAR_BLOCK = BLOCKS
+            .register("altar",
+                    () -> new AltarBlock(BlockBehaviour.Properties.of().strength(3.5F)));
 
     public static final RegistrySupplier<BlockEntityType<AltarBlockEntity>> ALTAR_BLOCK_ENTITY = BLOCK_ENTITIES
             .register("altar",
                     () -> BlockEntityType.Builder.of(AltarBlockEntity::new, ModBlocks.ALTAR_BLOCK.get()).build(null));
 
-    public static final RegistrySupplier<Item> ALTAR_ITEM = ModItems.ITEMS.register("altar",
-            () -> new BlockItem(ModBlocks.ALTAR_BLOCK.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> ALTAR_ITEM = ModItems.ITEMS
+            .register("altar",
+                    () -> new BlockItem(ModBlocks.ALTAR_BLOCK.get(), new Item.Properties()));
+
+    // Pedestal
+    public static final RegistrySupplier<Block> PEDESTAL_BLOCK = BLOCKS
+            .register("pedestal",
+                    () -> new PedestalBlock(BlockBehaviour.Properties.of().strength(3.5F)));
+
+    public static final RegistrySupplier<BlockEntityType<PedestalBlockEntity>> PEDESTAL_BLOCK_ENTITY = BLOCK_ENTITIES
+            .register("pedestal",
+                    () -> BlockEntityType.Builder.of(PedestalBlockEntity::new, ModBlocks.PEDESTAL_BLOCK.get())
+                            .build(null));
+
+    public static final RegistrySupplier<Item> PEDESTAL_ITEM = ModItems.ITEMS
+            .register("pedestal",
+                    () -> new BlockItem(ModBlocks.PEDESTAL_BLOCK.get(), new Item.Properties()));
 
     public static void register() {
         BLOCKS.register();

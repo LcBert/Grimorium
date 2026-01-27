@@ -1,6 +1,5 @@
-package com.lucab.grimorium.blocks.altar;
+package com.lucab.grimorium.blocks.pedestal;
 
-import com.lucab.grimorium.blocks.ModBlocks;
 import com.mojang.serialization.MapCodec;
 
 import net.minecraft.core.BlockPos;
@@ -14,31 +13,21 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import org.jetbrains.annotations.Nullable;
 
-public class AltarBlock extends BaseEntityBlock {
-    public static final MapCodec<AltarBlock> CODEC = simpleCodec(AltarBlock::new);
+public class PedestalBlock extends BaseEntityBlock {
+    public static final MapCodec<PedestalBlock> CODEC = simpleCodec(PedestalBlock::new);
 
-    public AltarBlock(BlockBehaviour.Properties properties) {
+    public PedestalBlock(Properties properties) {
         super(properties);
-    }
-
-    @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state,
-            BlockEntityType<T> type) {
-        return createTickerHelper(type, ModBlocks.ALTAR_BLOCK_ENTITY.get(), AltarBlockEntity::tick);
     }
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
             Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (!stack.isEmpty()) {
-            if (level.getBlockEntity(pos) instanceof AltarBlockEntity altar && altar.getItem().isEmpty()) {
+            if (level.getBlockEntity(pos) instanceof PedestalBlockEntity altar && altar.getItem().isEmpty()) {
                 altar.setItem(stack.split(1));
                 return ItemInteractionResult.sidedSuccess(level.isClientSide);
             }
@@ -49,7 +38,7 @@ public class AltarBlock extends BaseEntityBlock {
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player,
             BlockHitResult hitResult) {
-        if (level.getBlockEntity(pos) instanceof AltarBlockEntity altar && !altar.getItem().isEmpty()) {
+        if (level.getBlockEntity(pos) instanceof PedestalBlockEntity altar && !altar.getItem().isEmpty()) {
             player.getInventory().placeItemBackInInventory(altar.getItem());
             altar.setItem(ItemStack.EMPTY);
             return InteractionResult.sidedSuccess(level.isClientSide);
@@ -61,7 +50,7 @@ public class AltarBlock extends BaseEntityBlock {
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!state.is(newState.getBlock())) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
-            if (blockEntity instanceof AltarBlockEntity altar) {
+            if (blockEntity instanceof PedestalBlockEntity altar) {
                 if (altar.getItem() != ItemStack.EMPTY) {
                     BaseEntityBlock.popResourceFromFace(level, pos, Direction.UP, altar.getItem());
                 }
@@ -70,10 +59,9 @@ public class AltarBlock extends BaseEntityBlock {
         }
     }
 
-    @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new AltarBlockEntity(pos, state);
+        return new PedestalBlockEntity(pos, state);
     }
 
     @Override

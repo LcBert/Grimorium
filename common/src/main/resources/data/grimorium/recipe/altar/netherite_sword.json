@@ -1,0 +1,18 @@
+{
+  "type": "grimorium:altar",
+  "catalyst": {
+    "item": "minecraft:nether_star"
+  },
+  "inputs": [
+    {
+      "item": "minecraft:diamond"
+    },
+    {
+      "item": "minecraft:diamond"
+    }
+  ],
+  "result": {
+    "id": "minecraft:netherite_sword",
+    "count": 1
+  }
+}

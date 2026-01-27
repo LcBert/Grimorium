@@ -1,6 +1,13 @@
 package com.lucab.grimorium.blocks.altar;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import com.lucab.grimorium.blocks.ModBlocks;
+import com.lucab.grimorium.blocks.pedestal.PedestalBlockEntity;
+import com.lucab.grimorium.recipes.ModRecipes;
+import com.lucab.grimorium.recipes.altar.AltarRecipe;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -8,9 +15,14 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+
 import org.jetbrains.annotations.Nullable;
 
 public class AltarBlockEntity extends BlockEntity {
@@ -28,7 +40,61 @@ public class AltarBlockEntity extends BlockEntity {
         this.item = item;
         setChanged();
         if (level != null) {
-            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+            BlockState state = level.getBlockState(worldPosition);
+            level.sendBlockUpdated(worldPosition, state, state, 3);
+        }
+    }
+
+    public void removeItem() {
+        setItem(ItemStack.EMPTY);
+    }
+
+    public static void tick(Level level, BlockPos pos, BlockState state, AltarBlockEntity blockEntity) {
+        if (level.isClientSide)
+            return;
+
+        ItemStack catalyst = blockEntity.getItem();
+        if (catalyst.isEmpty())
+            return;
+
+        List<ItemStack> inputs = new ArrayList<>();
+        List<PedestalBlockEntity> pedestals = new ArrayList<>();
+
+        BlockPos.betweenClosed(pos.offset(-3, 0, -3), pos.offset(3, 1, 3)).forEach(p -> {
+            if (level.getBlockEntity(p) instanceof PedestalBlockEntity pedestal && !pedestal.getItem().isEmpty()) {
+                inputs.add(pedestal.getItem());
+                pedestals.add(pedestal);
+            }
+        });
+
+        AltarRecipe.AltarRecipeInput input = new AltarRecipe.AltarRecipeInput(catalyst, inputs);
+
+        Optional<RecipeHolder<AltarRecipe>> recipe = level.getRecipeManager().getRecipeFor(ModRecipes.ALTAR_TYPE.get(),
+                input, level);
+
+        if (recipe.isPresent()) {
+            AltarRecipe r = recipe.get().value();
+
+            // Consume catalyst
+            blockEntity.removeItem();
+
+            // Consume inputs
+            List<PedestalBlockEntity> remainingPedestals = new ArrayList<>(pedestals);
+            for (Ingredient ingredient : r.getInputs()) {
+                for (int i = 0; i < remainingPedestals.size(); i++) {
+                    PedestalBlockEntity ped = remainingPedestals.get(i);
+                    if (ingredient.test(ped.getItem())) {
+                        ped.removeItem();
+                        remainingPedestals.remove(i);
+                        break;
+                    }
+                }
+            }
+
+            // Pop result
+            ItemStack result = r.assemble(input, level.registryAccess());
+            ItemEntity entity = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, result);
+            level.addFreshEntity(entity);
         }
     }
 
@@ -37,6 +103,8 @@ public class AltarBlockEntity extends BlockEntity {
         super.saveAdditional(tag, registries);
         if (!item.isEmpty()) {
             tag.put("Item", item.save(registries));
+        } else {
+            tag.putBoolean("Empty", true);
         }
     }
 
