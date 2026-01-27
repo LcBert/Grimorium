@@ -1,0 +1,8 @@
+{
+    "replace": false,
+    "values": [
+        "grimorium:grimor_ore",
+        "grimorium:altar",
+        "grimorium:pedestal"
+    ]
+}

@@ -19,9 +19,11 @@ public class ModCreativeModeTabs {
     public static final RegistrySupplier<CreativeModeTab> GRIMORIUM_TAB = TABS.register("grimorium_tab",
             () -> CreativeModeTab.builder(Row.TOP, 1)
                     .title(Component.translatable("itemGroup.grimorium"))
-                    .icon(() -> new ItemStack(ModItems.RUBIN.get()))
+                    .icon(() -> new ItemStack(ModItems.GRIMOR_INGOT.get()))
                     .displayItems((parameters, output) -> {
-                        output.accept(ModItems.RUBIN.get());
+                        output.accept(ModBlocks.GRIMOR_ORE_ITEM.get());
+                        output.accept(ModItems.RAW_GRIMOR.get());
+                        output.accept(ModItems.GRIMOR_INGOT.get());
                         output.accept(ModBlocks.ALTAR_ITEM.get());
                         output.accept(ModBlocks.PEDESTAL_ITEM.get());
                     }).build());

@@ -53,6 +53,17 @@ public class ModBlocks {
             .register("pedestal",
                     () -> new BlockItem(ModBlocks.PEDESTAL_BLOCK.get(), new Item.Properties()));
 
+    // Grimor Ore
+    public static final RegistrySupplier<Block> GRIMOR_ORE = BLOCKS.register(
+            "grimor_ore",
+            () -> new Block(BlockBehaviour.Properties.of()
+                    .strength(3.0F)
+                    .requiresCorrectToolForDrops()));
+
+    public static final RegistrySupplier<Item> GRIMOR_ORE_ITEM = ModItems.ITEMS
+            .register("grimor_ore",
+                    () -> new BlockItem(ModBlocks.GRIMOR_ORE.get(), new Item.Properties()));
+
     public static void register() {
         BLOCKS.register();
         BLOCK_ENTITIES.register();

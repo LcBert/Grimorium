@@ -2,5 +2,7 @@
     "itemGroup.grimorium": "Grimorium",
     "block.grimorium.altar": "Altar",
     "block.grimorium.pedestal": "Pedestal",
-    "item.grimorium.rubin": "Rubin"
+    "block.grimorium.grimor_ore": "Grimor Ore",
+    "item.grimorium.raw_grimor": "Raw Grimor",
+    "item.grimorium.grimor_ingot": "Grimor Ingot"
 }
