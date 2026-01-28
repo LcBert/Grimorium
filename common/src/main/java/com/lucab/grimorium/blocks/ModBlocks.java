@@ -3,6 +3,8 @@ package com.lucab.grimorium.blocks;
 import com.lucab.grimorium.Grimorium;
 import com.lucab.grimorium.blocks.altar.AltarBlock;
 import com.lucab.grimorium.blocks.altar.AltarBlockEntity;
+import com.lucab.grimorium.blocks.padlock.PadlockBlock;
+import com.lucab.grimorium.blocks.padlock.PadlockBlockEntity;
 import com.lucab.grimorium.blocks.pedestal.PedestalBlock;
 import com.lucab.grimorium.blocks.pedestal.PedestalBlockEntity;
 import com.lucab.grimorium.items.ModItems;
@@ -52,6 +54,23 @@ public class ModBlocks {
     public static final RegistrySupplier<Item> PEDESTAL_ITEM = ModItems.ITEMS
             .register("pedestal",
                     () -> new BlockItem(ModBlocks.PEDESTAL_BLOCK.get(), new Item.Properties()));
+
+    // Padlock
+    public static final RegistrySupplier<Block> PADLOCK_BLOCK = BLOCKS
+            .register("padlock",
+                    () -> new PadlockBlock(BlockBehaviour.Properties.of()
+                            .strength(2.0F)
+                            .noOcclusion()
+                            .requiresCorrectToolForDrops()));
+
+    public static final RegistrySupplier<BlockEntityType<PadlockBlockEntity>> PADLOCK_BLOCK_ENTITY = BLOCK_ENTITIES
+            .register("padlock",
+                    () -> BlockEntityType.Builder.of(PadlockBlockEntity::new, ModBlocks.PADLOCK_BLOCK.get())
+                            .build(null));
+
+    public static final RegistrySupplier<Item> PADLOCK_ITEM = ModItems.ITEMS
+            .register("padlock",
+                    () -> new BlockItem(ModBlocks.PADLOCK_BLOCK.get(), new Item.Properties()));
 
     // Grimor Ore
     public static final RegistrySupplier<Block> GRIMOR_ORE = BLOCKS.register(

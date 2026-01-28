@@ -26,6 +26,8 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.GRIMOR_INGOT.get());
                         output.accept(ModBlocks.ALTAR_ITEM.get());
                         output.accept(ModBlocks.PEDESTAL_ITEM.get());
+                        output.accept(ModBlocks.PADLOCK_ITEM.get());
+                        output.accept(ModItems.PADLOCK_KEY.get());
                     }).build());
 
     public static void register() {

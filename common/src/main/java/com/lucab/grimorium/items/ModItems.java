@@ -10,6 +10,11 @@ import net.minecraft.world.item.Item;
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Grimorium.MODID, Registries.ITEM);
 
+    // Padlock Key
+    public static final RegistrySupplier<Item> PADLOCK_KEY = ITEMS.register(
+            "padlock_key",
+            () -> new PadlockKey(new Item.Properties().stacksTo(1)));
+
     // Grimor
     public static final RegistrySupplier<Item> RAW_GRIMOR = ITEMS.register(
             "raw_grimor",
