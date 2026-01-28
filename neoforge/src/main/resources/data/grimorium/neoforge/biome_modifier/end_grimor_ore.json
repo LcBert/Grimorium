@@ -1,0 +1,6 @@
+{
+    "type": "neoforge:add_features",
+    "biomes": "#minecraft:is_end",
+    "features": "grimorium:end_grimor_ore",
+    "step": "underground_ores"
+}
