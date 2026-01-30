@@ -22,11 +22,11 @@ public class PedestalBlockEntity extends BlockEntity {
     }
 
     public ItemStack getItem() {
-        return item;
+        return item.copy();
     }
 
     public void setItem(ItemStack item) {
-        this.item = item;
+        this.item = item.copy();
         setChanged();
         if (level != null) {
             BlockState state = level.getBlockState(worldPosition);

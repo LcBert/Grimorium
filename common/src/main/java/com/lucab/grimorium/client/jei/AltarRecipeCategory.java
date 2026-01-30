@@ -75,10 +75,8 @@ public class AltarRecipeCategory implements IRecipeCategory<AltarRecipe> {
         // Result
         slot.draw(guiGraphics, arrow_pos_x + 30 - 1, centerY);
 
-        // Inputs
-        // Arrange inputs in a circle or row around the center
-
-        int count = recipe.getInputs().size();
+        // Inputs -> Arrange inputs in a circle around the center
+        int count = Math.min(recipe.getInputs().size(), 8); // At least 8 inputs
         if (count > 0) {
             double angleStep = (2 * Math.PI) / count;
             for (int i = 0; i < count; i++) {
@@ -103,7 +101,7 @@ public class AltarRecipeCategory implements IRecipeCategory<AltarRecipe> {
 
         // Inputs
         // Arrange inputs in a circle or row around the center
-        int count = recipe.getInputs().size();
+        int count = Math.min(recipe.getInputs().size(), 8); // At least 8 inputs
         if (count > 0) {
             double angleStep = (2 * Math.PI) / count;
             for (int i = 0; i < count; i++) {

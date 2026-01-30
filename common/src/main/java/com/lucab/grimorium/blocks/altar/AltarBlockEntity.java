@@ -40,11 +40,11 @@ public class AltarBlockEntity extends BlockEntity {
     }
 
     public ItemStack getItem() {
-        return item;
+        return item.copy();
     }
 
     public void setItem(ItemStack item) {
-        this.item = item;
+        this.item = item.copy();
         setChanged();
         if (level != null) {
             BlockState state = level.getBlockState(worldPosition);
@@ -61,83 +61,53 @@ public class AltarBlockEntity extends BlockEntity {
             return;
 
         ItemStack catalyst = blockEntity.getItem();
-        if (catalyst.isEmpty())
+        if (catalyst.isEmpty()) {
+            blockEntity.progress = 0;
             return;
+        }
 
         List<ItemStack> inputs = new ArrayList<>();
         List<PedestalBlockEntity> pedestals = new ArrayList<>();
 
-        BlockPos.betweenClosed(pos.offset(-3, 0, -3), pos.offset(3, 0, 3)).forEach(p -> {
-            if (level.getBlockEntity(p) instanceof PedestalBlockEntity pedestal && !pedestal.getItem().isEmpty()) {
-                inputs.add(pedestal.getItem());
-                pedestals.add(pedestal);
-            }
-        });
+        pedestals = getPedestals(level, pos);
+        if (!pedestals.isEmpty()) {
+            pedestals.forEach(ped -> {
+                if (!ped.getItem().isEmpty()) {
+                    inputs.add(ped.getItem());
+                }
+            });
+        } else {
+            blockEntity.progress = 0;
+            return;
+        }
 
         AltarRecipe.AltarRecipeInput input = new AltarRecipe.AltarRecipeInput(catalyst, inputs);
-
         Optional<RecipeHolder<AltarRecipe>> recipe = level.getRecipeManager().getRecipeFor(ModRecipes.ALTAR_TYPE.get(),
                 input, level);
 
         if (recipe.isPresent()) {
+            AltarRecipe r = recipe.get().value();
+
             if (blockEntity.progress == 0)
                 level.playSound(null, pos, SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS);
 
-            if (level instanceof ServerLevel serverLevel) {
-                for (PedestalBlockEntity pedestal : pedestals) {
-                    BlockPos pedPos = pedestal.getBlockPos();
-                    double startX = pedPos.getX() + 0.5;
-                    double startY = pedPos.getY() + 1.2;
-                    double startZ = pedPos.getZ() + 0.5;
-                    double targetX = pos.getX() + 0.5;
-                    double targetY = pos.getY() + 1.2;
-                    double targetZ = pos.getZ() + 0.5;
-                    double dx = targetX - startX;
-                    double dy = targetY - startY;
-                    double dz = targetZ - startZ;
-                    double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+            List<PedestalBlockEntity> usedPedestals = getUsedPedestals(level, pos, r, pedestals);
 
-                    // Particles to altar
-                    serverLevel.sendParticles(
-                            ParticleTypes.WITCH,
-                            targetX, targetY, targetZ,
-                            0,
-                            dx / distance, dy / distance, dz / distance,
-                            0.2);
+            addParticles(level, pos, usedPedestals);
 
-                    // Particles to pedestals
-                    serverLevel.sendParticles(
-                            ParticleTypes.WITCH,
-                            startX, startY, startZ,
-                            0,
-                            dx / distance, dy / distance, dz / distance,
-                            0.2);
-
-                    // Particles from pedestals to altar
-                    serverLevel.sendParticles(
-                            ParticleTypes.ENCHANT,
-                            targetX, targetY + 0.5, targetZ,
-                            0,
-                            startX - targetX, startY - targetY, startZ - targetZ,
-                            1.0);
-                }
-            }
-
-            AltarRecipe r = recipe.get().value();
             blockEntity.maxProgress = r.getProcessTime();
             blockEntity.progress++;
-            if (blockEntity.progress >= blockEntity.maxProgress) { // Consume catalyst
+            if (blockEntity.progress >= blockEntity.maxProgress) {
                 level.playSound(null, pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS);
                 blockEntity.removeItem();
 
                 // Consume inputs
-                List<PedestalBlockEntity> remainingPedestals = new ArrayList<>(pedestals);
                 for (Ingredient ingredient : r.getInputs()) {
-                    for (int i = 0; i < remainingPedestals.size(); i++) {
-                        PedestalBlockEntity ped = remainingPedestals.get(i);
+                    for (int i = 0; i < usedPedestals.size(); i++) {
+                        PedestalBlockEntity ped = usedPedestals.get(i);
                         if (ingredient.test(ped.getItem())) {
                             ped.removeItem();
-                            remainingPedestals.remove(i);
+                            usedPedestals.remove(i);
                             break;
                         }
                     }
@@ -145,14 +115,94 @@ public class AltarBlockEntity extends BlockEntity {
 
                 // Pop result
                 ItemStack result = r.assemble(input, level.registryAccess());
-                ItemEntity entity = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5,
-                        result);
+                ItemEntity entity = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, result);
                 level.addFreshEntity(entity);
 
                 blockEntity.progress = 0;
             }
         } else {
             blockEntity.progress = 0;
+        }
+    }
+
+    private static List<PedestalBlockEntity> getPedestals(Level level, BlockPos pos) {
+        List<BlockEntity> blockEntities = new ArrayList<>();
+        List<PedestalBlockEntity> pedestals = new ArrayList<>();
+
+        blockEntities.add(level.getBlockEntity(pos.offset(0, 0, 3)));
+        blockEntities.add(level.getBlockEntity(pos.offset(0, 0, -3)));
+        blockEntities.add(level.getBlockEntity(pos.offset(3, 0, 0)));
+        blockEntities.add(level.getBlockEntity(pos.offset(-3, 0, 0)));
+        blockEntities.add(level.getBlockEntity(pos.offset(2, 0, 2)));
+        blockEntities.add(level.getBlockEntity(pos.offset(-2, 0, -2)));
+        blockEntities.add(level.getBlockEntity(pos.offset(2, 0, -2)));
+        blockEntities.add(level.getBlockEntity(pos.offset(-2, 0, 2)));
+
+        blockEntities.forEach(block -> {
+            if (block instanceof PedestalBlockEntity pedestal)
+                pedestals.add(pedestal);
+        });
+
+        return pedestals;
+    }
+
+    private static List<PedestalBlockEntity> getUsedPedestals(Level level, BlockPos pos, AltarRecipe r,
+            List<PedestalBlockEntity> pedestals) {
+        List<PedestalBlockEntity> usedPedestals = new ArrayList<>();
+        List<PedestalBlockEntity> remainingPedestals = new ArrayList<>(pedestals);
+        for (Ingredient ingredient : r.getInputs()) {
+            for (int i = 0; i < remainingPedestals.size(); i++) {
+                PedestalBlockEntity ped = remainingPedestals.get(i);
+                if (ingredient.test(ped.getItem())) {
+                    usedPedestals.add(ped);
+                    remainingPedestals.remove(i);
+                    break;
+                }
+            }
+        }
+
+        return usedPedestals;
+    }
+
+    private static void addParticles(Level level, BlockPos pos, List<PedestalBlockEntity> pedestals) {
+        if (level instanceof ServerLevel serverLevel) {
+            for (PedestalBlockEntity pedestal : pedestals) {
+                BlockPos pedPos = pedestal.getBlockPos();
+                double startX = pedPos.getX() + 0.5;
+                double startY = pedPos.getY() + 1.2;
+                double startZ = pedPos.getZ() + 0.5;
+                double targetX = pos.getX() + 0.5;
+                double targetY = pos.getY() + 1.2;
+                double targetZ = pos.getZ() + 0.5;
+                double dx = targetX - startX;
+                double dy = targetY - startY;
+                double dz = targetZ - startZ;
+                double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+                // Particles to altar
+                serverLevel.sendParticles(
+                        ParticleTypes.WITCH,
+                        targetX, targetY, targetZ,
+                        0,
+                        dx / distance, dy / distance, dz / distance,
+                        0.2);
+
+                // Particles to pedestals
+                serverLevel.sendParticles(
+                        ParticleTypes.WITCH,
+                        startX, startY, startZ,
+                        0,
+                        dx / distance, dy / distance, dz / distance,
+                        0.2);
+
+                // Particles from pedestals to altar
+                serverLevel.sendParticles(
+                        ParticleTypes.ENCHANT,
+                        targetX, targetY + 0.5, targetZ,
+                        0,
+                        startX - targetX, startY - targetY, startZ - targetZ,
+                        1.0);
+            }
         }
     }
 
