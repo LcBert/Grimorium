@@ -1,6 +1,7 @@
 {
     "itemGroup.grimorium": "Grimorium",
     "block.grimorium.altar": "Altar",
+    "tooltip.grimorium.altar.activate": "Use Flint and Steel to activate",
     "block.grimorium.pedestal": "Pedestal",
     "block.grimorium.grimor_ore": "Grimor Ore",
     "block.grimorium.candelabra": "Candelabra",

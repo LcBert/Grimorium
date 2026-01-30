@@ -5,11 +5,15 @@ import com.mojang.serialization.MapCodec;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -41,24 +45,28 @@ public class AltarBlock extends BaseEntityBlock {
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
             Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if (!stack.isEmpty()) {
-            if (level.getBlockEntity(pos) instanceof AltarBlockEntity altar && altar.getItem().isEmpty()) {
+        AltarBlockEntity altar = (AltarBlockEntity) level.getBlockEntity(pos);
+        if (level.isClientSide)
+            return ItemInteractionResult.SUCCESS;
+
+        ItemStack item = altar.getItem().copy();
+        if (stack.getItem().equals(Items.FLINT_AND_STEEL)) {
+            if (!item.isEmpty()) {
+                altar.setActive(true);
+                level.playSound(null, pos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS);
+                stack.hurtAndBreak(!player.isCreative() ? 1 : 0, player, EquipmentSlot.MAINHAND);
+            }
+        } else {
+            if (item.isEmpty()) {
                 altar.setItem(stack.split(1));
-                return ItemInteractionResult.sidedSuccess(level.isClientSide);
+                return ItemInteractionResult.SUCCESS;
+            } else {
+                altar.removeItem();
+                if (!player.getInventory().add(item))
+                    player.drop(item, false);
             }
         }
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-    }
-
-    @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player,
-            BlockHitResult hitResult) {
-        if (level.getBlockEntity(pos) instanceof AltarBlockEntity altar && !altar.getItem().isEmpty()) {
-            player.getInventory().placeItemBackInInventory(altar.getItem());
-            altar.setItem(ItemStack.EMPTY);
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-        return InteractionResult.PASS;
+        return ItemInteractionResult.SUCCESS;
     }
 
     @Override

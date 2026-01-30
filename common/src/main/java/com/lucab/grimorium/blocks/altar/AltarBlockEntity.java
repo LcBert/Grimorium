@@ -31,6 +31,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class AltarBlockEntity extends BlockEntity {
     private ItemStack item = ItemStack.EMPTY;
+    private boolean Active = false;
 
     private int progress = 0;
     private int maxProgress = 0;
@@ -46,23 +47,48 @@ public class AltarBlockEntity extends BlockEntity {
     public void setItem(ItemStack item) {
         this.item = item.copy();
         setChanged();
-        if (level != null) {
-            BlockState state = level.getBlockState(worldPosition);
-            level.sendBlockUpdated(worldPosition, state, state, 3);
-        }
     }
 
     public void removeItem() {
         setItem(ItemStack.EMPTY);
     }
 
+    public boolean toogleActive() {
+        this.Active = !this.Active;
+        setChanged();
+        return this.isActive();
+    }
+
+    public void setActive(boolean val) {
+        this.Active = val;
+        setChanged();
+    }
+
+    public boolean isActive() {
+        return this.Active;
+    }
+
+    @Override
+    public void setChanged() {
+        BlockState state = level.getBlockState(worldPosition);
+        if (level != null) {
+            level.sendBlockUpdated(worldPosition, state, state, 3);
+        }
+        super.setChanged();
+    }
+
     public static void tick(Level level, BlockPos pos, BlockState state, AltarBlockEntity blockEntity) {
         if (level.isClientSide)
             return;
 
+        if (!blockEntity.isActive()) {
+            blockEntity.resetProgress();
+            return;
+        }
+
         ItemStack catalyst = blockEntity.getItem();
         if (catalyst.isEmpty()) {
-            blockEntity.progress = 0;
+            blockEntity.resetProgress();
             return;
         }
 
@@ -77,7 +103,7 @@ public class AltarBlockEntity extends BlockEntity {
                 }
             });
         } else {
-            blockEntity.progress = 0;
+            blockEntity.resetProgress();
             return;
         }
 
@@ -118,11 +144,16 @@ public class AltarBlockEntity extends BlockEntity {
                 ItemEntity entity = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, result);
                 level.addFreshEntity(entity);
 
-                blockEntity.progress = 0;
+                blockEntity.resetProgress();
             }
         } else {
-            blockEntity.progress = 0;
+            blockEntity.resetProgress();
         }
+    }
+
+    private void resetProgress() {
+        this.progress = 0;
+        this.setActive(false);
     }
 
     private static List<PedestalBlockEntity> getPedestals(Level level, BlockPos pos) {
@@ -214,6 +245,7 @@ public class AltarBlockEntity extends BlockEntity {
         } else {
             tag.put("Item", new CompoundTag());
         }
+        tag.putBoolean("Active", Active);
     }
 
     @Override
@@ -224,6 +256,7 @@ public class AltarBlockEntity extends BlockEntity {
         } else {
             item = ItemStack.EMPTY;
         }
+        Active = tag.getBoolean("Active");
     }
 
     @Nullable

@@ -16,11 +16,16 @@ import com.lucab.grimorium.items.ModItems;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+
+import java.util.List;
 
 public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Grimorium.MODID, Registries.BLOCK);
@@ -41,7 +46,14 @@ public class ModBlocks {
 
     public static final RegistrySupplier<Item> ALTAR_ITEM = ModItems.ITEMS
             .register("altar",
-                    () -> new BlockItem(ALTAR_BLOCK.get(), new Item.Properties()));
+                    () -> new BlockItem(ALTAR_BLOCK.get(), new Item.Properties()) {
+                        @Override
+                        public void appendHoverText(ItemStack stack, Item.TooltipContext context,
+                                List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                            super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+                            tooltipComponents.add(Component.translatable("tooltip.grimorium.altar.activate").withColor(0x6002A8));
+                        }
+                    });
 
     // Pedestal
     public static final RegistrySupplier<Block> PEDESTAL_BLOCK = BLOCKS
