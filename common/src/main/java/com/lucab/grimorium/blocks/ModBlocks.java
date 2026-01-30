@@ -7,8 +7,8 @@ import com.lucab.grimorium.blocks.padlock.PadlockBlock;
 import com.lucab.grimorium.blocks.padlock.PadlockBlockEntity;
 import com.lucab.grimorium.blocks.pedestal.PedestalBlock;
 import com.lucab.grimorium.blocks.pedestal.PedestalBlockEntity;
-import com.lucab.grimorium.blocks.stand.SmallStandBlock;
-import com.lucab.grimorium.blocks.stand.SmallStandBlockEntity;
+import com.lucab.grimorium.blocks.stand.StandBlock;
+import com.lucab.grimorium.blocks.stand.StandBlockEntity;
 import com.lucab.grimorium.items.ModItems;
 
 import dev.architectury.registry.registries.DeferredRegister;
@@ -85,21 +85,21 @@ public class ModBlocks {
             .register("grimor_ore",
                     () -> new BlockItem(GRIMOR_ORE.get(), new Item.Properties()));
 
-    // Stands
-    public static final RegistrySupplier<Block> SMALL_STAND_BLOCK = BLOCKS
-            .register("small_stand",
-                    () -> new SmallStandBlock(BlockBehaviour.Properties.of()
+    // Stand
+    public static final RegistrySupplier<Block> STAND_BLOCK = BLOCKS
+            .register("stand",
+                    () -> new StandBlock(BlockBehaviour.Properties.of()
                             .strength(1.5F)
                             .noOcclusion()));
 
-    public static final RegistrySupplier<BlockEntityType<SmallStandBlockEntity>> SMALL_STAND_BLOCK_ENTITY = BLOCK_ENTITIES
-            .register("small_stand",
-                    () -> BlockEntityType.Builder.of(SmallStandBlockEntity::new, SMALL_STAND_BLOCK.get())
+    public static final RegistrySupplier<BlockEntityType<StandBlockEntity>> STAND_BLOCK_ENTITY = BLOCK_ENTITIES
+            .register("stand",
+                    () -> BlockEntityType.Builder.of(StandBlockEntity::new, STAND_BLOCK.get())
                             .build(null));
 
-    public static final RegistrySupplier<Item> SMALL_STAND_ITEM = ModItems.ITEMS
-            .register("small_stand",
-                    () -> new BlockItem(SMALL_STAND_BLOCK.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> STAND_ITEM = ModItems.ITEMS
+            .register("stand",
+                    () -> new BlockItem(STAND_BLOCK.get(), new Item.Properties()));
 
     public static void register() {
         BLOCKS.register();

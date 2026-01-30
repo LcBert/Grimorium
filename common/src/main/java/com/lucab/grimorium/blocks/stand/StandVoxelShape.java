@@ -5,7 +5,7 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class SmallStandVoxelShape {
+public class StandVoxelShape {
     public static VoxelShape getShape(Direction direction) {
         VoxelShape shape = Shapes.empty();
         switch (direction) {

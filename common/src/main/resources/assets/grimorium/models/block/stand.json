@@ -4,8 +4,8 @@
 	"parent": "minecraft:block/block",
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "grimorium:block/small_stand",
-		"particle": "grimorium:block/small_stand"
+		"0": "grimorium:block/stand",
+		"particle": "grimorium:block/stand"
 	},
 	"elements": [
 		{

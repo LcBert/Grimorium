@@ -1,18 +1,18 @@
 {
     "variants": {
         "facing=north": {
-            "model": "grimorium:block/small_stand"
+            "model": "grimorium:block/stand"
         },
         "facing=east": {
-            "model": "grimorium:block/small_stand",
+            "model": "grimorium:block/stand",
             "y": 90
         },
         "facing=south": {
-            "model": "grimorium:block/small_stand",
+            "model": "grimorium:block/stand",
             "y": 180
         },
         "facing=west": {
-            "model": "grimorium:block/small_stand",
+            "model": "grimorium:block/stand",
             "y": 270
         }
     }

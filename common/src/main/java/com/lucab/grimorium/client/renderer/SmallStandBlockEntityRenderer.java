@@ -1,7 +1,7 @@
 package com.lucab.grimorium.client.renderer;
 
-import com.lucab.grimorium.blocks.stand.SmallStandBlock;
-import com.lucab.grimorium.blocks.stand.SmallStandBlockEntity;
+import com.lucab.grimorium.blocks.stand.StandBlock;
+import com.lucab.grimorium.blocks.stand.StandBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 
@@ -15,12 +15,12 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
-public class SmallStandBlockEntityRenderer implements BlockEntityRenderer<SmallStandBlockEntity> {
+public class SmallStandBlockEntityRenderer implements BlockEntityRenderer<StandBlockEntity> {
     public SmallStandBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
     }
 
     @Override
-    public void render(SmallStandBlockEntity blockEntity, float partialTick, PoseStack poseStack,
+    public void render(StandBlockEntity blockEntity, float partialTick, PoseStack poseStack,
             MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
         ItemStack itemStack = blockEntity.getItem();
         if (!itemStack.isEmpty()) {
@@ -44,7 +44,7 @@ public class SmallStandBlockEntityRenderer implements BlockEntityRenderer<SmallS
             }
             poseStack.scale(0.75F, 0.75F, 0.75F);
 
-            Direction facing = blockEntity.getBlockState().getValue(SmallStandBlock.FACING);
+            Direction facing = blockEntity.getBlockState().getValue(StandBlock.FACING);
             poseStack.mulPose(Axis.YP.rotationDegrees(-facing.toYRot()));
 
             int lightAbove = LevelRenderer.getLightColor(blockEntity.getLevel(), blockEntity.getBlockPos().above());

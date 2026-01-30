@@ -27,11 +27,11 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import org.jetbrains.annotations.Nullable;
 
-public class SmallStandBlock extends BaseEntityBlock {
-    public static final MapCodec<SmallStandBlock> CODEC = simpleCodec(SmallStandBlock::new);
+public class StandBlock extends BaseEntityBlock {
+    public static final MapCodec<StandBlock> CODEC = simpleCodec(StandBlock::new);
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
-    public SmallStandBlock(Properties properties) {
+    public StandBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
@@ -43,7 +43,7 @@ public class SmallStandBlock extends BaseEntityBlock {
         if (interactionHand != InteractionHand.MAIN_HAND)
             return ItemInteractionResult.CONSUME;
 
-        SmallStandBlockEntity small_stand = (SmallStandBlockEntity) level.getBlockEntity(blockPos);
+        StandBlockEntity small_stand = (StandBlockEntity) level.getBlockEntity(blockPos);
 
         ItemStack item = small_stand.getItem();
         if (item.isEmpty()) {
@@ -60,7 +60,7 @@ public class SmallStandBlock extends BaseEntityBlock {
 
     @Override
     protected void onRemove(BlockState blockState, Level level, BlockPos blockPos, BlockState blockState2, boolean bl) {
-        SmallStandBlockEntity small_stand = (SmallStandBlockEntity) level.getBlockEntity(blockPos);
+        StandBlockEntity small_stand = (StandBlockEntity) level.getBlockEntity(blockPos);
         if (!small_stand.getItem().isEmpty()) {
             Block.popResource(level, blockPos, small_stand.getItem());
         }
@@ -91,7 +91,7 @@ public class SmallStandBlock extends BaseEntityBlock {
     @Override
     protected VoxelShape getShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos,
             CollisionContext collisionContext) {
-        return SmallStandVoxelShape.getShape(blockState.getValue(BlockStateProperties.HORIZONTAL_FACING));
+        return StandVoxelShape.getShape(blockState.getValue(BlockStateProperties.HORIZONTAL_FACING));
     }
 
     @Override
@@ -101,7 +101,7 @@ public class SmallStandBlock extends BaseEntityBlock {
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new SmallStandBlockEntity(pos, state);
+        return new StandBlockEntity(pos, state);
     }
 
     @Override

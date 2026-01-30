@@ -13,9 +13,9 @@ public class GrimoriumClient {
     public static void init() {
         BlockEntityRendererRegistry.register(ModBlocks.ALTAR_BLOCK_ENTITY.get(), AltarBlockEntityRenderer::new);
         BlockEntityRendererRegistry.register(ModBlocks.PEDESTAL_BLOCK_ENTITY.get(), PedestalBlockEntityRenderer::new);
-        BlockEntityRendererRegistry.register(ModBlocks.SMALL_STAND_BLOCK_ENTITY.get(),
+        BlockEntityRendererRegistry.register(ModBlocks.STAND_BLOCK_ENTITY.get(),
                 SmallStandBlockEntityRenderer::new);
 
-        RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.SMALL_STAND_BLOCK.get());
+        RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.STAND_BLOCK.get());
     }
 }

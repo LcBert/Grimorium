@@ -14,11 +14,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class SmallStandBlockEntity extends BlockEntity {
+public class StandBlockEntity extends BlockEntity {
     private ItemStack item = ItemStack.EMPTY;
 
-    public SmallStandBlockEntity(BlockPos blockPos, BlockState blockState) {
-        super(ModBlocks.SMALL_STAND_BLOCK_ENTITY.get(), blockPos, blockState);
+    public StandBlockEntity(BlockPos blockPos, BlockState blockState) {
+        super(ModBlocks.STAND_BLOCK_ENTITY.get(), blockPos, blockState);
     }
 
     public void setItem(ItemStack item) {
