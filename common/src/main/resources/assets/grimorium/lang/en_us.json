@@ -3,6 +3,7 @@
     "block.grimorium.altar": "Altar",
     "block.grimorium.pedestal": "Pedestal",
     "block.grimorium.grimor_ore": "Grimor Ore",
+    "block.grimorium.candelabra": "Candelabra",
     "item.grimorium.raw_grimor": "Raw Grimor",
     "item.grimorium.grimor_ingot": "Grimor Ingot"
 }

@@ -1,0 +1,11 @@
+{
+    "variants": {
+        "axis=x": {
+            "model": "grimorium:block/candelabra"
+        },
+        "axis=z": {
+            "model": "grimorium:block/candelabra",
+            "y": 90
+        }
+    }
+}

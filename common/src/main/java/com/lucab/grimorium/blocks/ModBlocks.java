@@ -3,6 +3,8 @@ package com.lucab.grimorium.blocks;
 import com.lucab.grimorium.Grimorium;
 import com.lucab.grimorium.blocks.altar.AltarBlock;
 import com.lucab.grimorium.blocks.altar.AltarBlockEntity;
+import com.lucab.grimorium.blocks.candelabra.CandelabraBlock;
+import com.lucab.grimorium.blocks.candelabra.CandelabraBlockEntity;
 import com.lucab.grimorium.blocks.padlock.PadlockBlock;
 import com.lucab.grimorium.blocks.padlock.PadlockBlockEntity;
 import com.lucab.grimorium.blocks.pedestal.PedestalBlock;
@@ -73,6 +75,22 @@ public class ModBlocks {
     public static final RegistrySupplier<Item> PADLOCK_ITEM = ModItems.ITEMS
             .register("padlock",
                     () -> new BlockItem(PADLOCK_BLOCK.get(), new Item.Properties()));
+
+    // Candelabra
+    public static final RegistrySupplier<Block> CANDELABRA_BLOCK = BLOCKS
+            .register("candelabra",
+                    () -> new CandelabraBlock(BlockBehaviour.Properties.of()
+                            .strength(1.0F)
+                            .noOcclusion()
+                            .lightLevel(state -> 12)));
+
+    public static final RegistrySupplier<BlockEntityType<CandelabraBlockEntity>> CANDELABRA_BLOCK_ENTITY = BLOCK_ENTITIES
+            .register("candelabra",
+                    () -> BlockEntityType.Builder.of(CandelabraBlockEntity::new, CANDELABRA_BLOCK.get()).build(null));
+
+    public static final RegistrySupplier<Item> CANDELABRA_ITEM = ModItems.ITEMS
+            .register("candelabra",
+                    () -> new BlockItem(CANDELABRA_BLOCK.get(), new Item.Properties()));
 
     // Grimor Ore
     public static final RegistrySupplier<Block> GRIMOR_ORE = BLOCKS.register(
