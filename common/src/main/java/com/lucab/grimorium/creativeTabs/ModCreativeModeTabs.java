@@ -28,6 +28,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.PEDESTAL_ITEM.get());
                         output.accept(ModBlocks.PADLOCK_ITEM.get());
                         output.accept(ModItems.PADLOCK_KEY.get());
+                        output.accept(ModBlocks.SMALL_STAND_ITEM.get());
                     }).build());
 
     public static void register() {
