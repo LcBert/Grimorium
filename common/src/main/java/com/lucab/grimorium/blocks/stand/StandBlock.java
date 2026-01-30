@@ -91,7 +91,7 @@ public class StandBlock extends BaseEntityBlock {
     @Override
     protected VoxelShape getShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos,
             CollisionContext collisionContext) {
-        return StandVoxelShape.getShape(blockState.getValue(BlockStateProperties.HORIZONTAL_FACING));
+        return StandVoxelShape.makeShape(blockState.getValue(BlockStateProperties.HORIZONTAL_FACING));
     }
 
     @Override

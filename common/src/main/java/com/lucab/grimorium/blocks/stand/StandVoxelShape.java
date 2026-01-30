@@ -6,7 +6,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class StandVoxelShape {
-    public static VoxelShape getShape(Direction direction) {
+    public static VoxelShape makeShape(Direction direction) {
         VoxelShape shape = Shapes.empty();
         switch (direction) {
             case Direction.NORTH:
