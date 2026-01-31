@@ -8,7 +8,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -46,27 +45,31 @@ public class AltarBlock extends BaseEntityBlock {
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
             Player player, InteractionHand hand, BlockHitResult hitResult) {
         AltarBlockEntity altar = (AltarBlockEntity) level.getBlockEntity(pos);
-        if (level.isClientSide)
-            return ItemInteractionResult.SUCCESS;
-
         ItemStack item = altar.getItem().copy();
+
         if (stack.getItem().equals(Items.FLINT_AND_STEEL)) {
-            if (!item.isEmpty()) {
+            if (!item.isEmpty() && !altar.isActive()) {
                 altar.setActive(true);
                 level.playSound(null, pos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS);
                 stack.hurtAndBreak(!player.isCreative() ? 1 : 0, player, EquipmentSlot.MAINHAND);
-            }
-        } else {
-            if (item.isEmpty()) {
+                return ItemInteractionResult.SUCCESS;
+            } else if (item.isEmpty()) {
                 altar.setItem(stack.split(1));
                 return ItemInteractionResult.SUCCESS;
-            } else {
+            }
+        } else {
+            if (item.isEmpty() && !stack.isEmpty()) {
+                altar.setItem(stack.split(1));
+                return ItemInteractionResult.SUCCESS;
+            } else if (!item.isEmpty()) {
                 altar.removeItem();
                 if (!player.getInventory().add(item))
                     player.drop(item, false);
+                return ItemInteractionResult.SUCCESS;
             }
         }
-        return ItemInteractionResult.SUCCESS;
+
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
     @Override

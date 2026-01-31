@@ -1,0 +1,27 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "pattern": [
+        "AAA",
+        "BCB",
+        "DDD"
+    ],
+    "key": {
+        "A": {
+            "item": "grimorium:grimor_ingot"
+        },
+        "B": {
+            "item": "minecraft:wither_skeleton_skull"
+        },
+        "C": {
+            "item": "minecraft:diamond_block"
+        },
+        "D": {
+            "item": "minecraft:chiseled_stone_bricks"
+        }
+    },
+    "result": {
+        "count": 1,
+        "id": "grimorium:altar"
+    }
+}
