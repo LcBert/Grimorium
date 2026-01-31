@@ -86,6 +86,10 @@ tasks.register('collectJars', Copy) {
     include "${rootProject.archives_name}-*-${rootProject.mod_version}.jar"
     into outputDir
 
+    rename { String fileName ->
+        fileName.replace("${rootProject.mod_version}.jar", "${rootProject.minecraft_version}-${rootProject.mod_version}.jar")
+    }
+
     dependsOn project(':fabric').tasks.named('build')
     dependsOn project(':neoforge').tasks.named('build')
 
