@@ -11,6 +11,7 @@ import com.lucab.grimorium.recipes.altar.AltarRecipe;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
@@ -19,7 +20,10 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.Container;
+import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -29,8 +33,8 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import org.jetbrains.annotations.Nullable;
 
-public class AltarBlockEntity extends BlockEntity {
-    private ItemStack item = ItemStack.EMPTY;
+public class AltarBlockEntity extends BlockEntity implements Container {
+    private final NonNullList<ItemStack> items = NonNullList.withSize(1, ItemStack.EMPTY);
     private boolean Active = false;
 
     private int progress = 0;
@@ -41,16 +45,68 @@ public class AltarBlockEntity extends BlockEntity {
     }
 
     public ItemStack getItem() {
-        return item.copy();
+        return getItem(0);
     }
 
     public void setItem(ItemStack item) {
-        this.item = item.copy();
-        setChanged();
+        setItem(0, item);
     }
 
     public void removeItem() {
-        setItem(ItemStack.EMPTY);
+        removeItem(0, 64);
+    }
+
+    @Override
+    public int getContainerSize() {
+        return 1;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        for (ItemStack itemStack : this.items) {
+            if (!itemStack.isEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public ItemStack getItem(int slot) {
+        return this.items.get(slot);
+    }
+
+    @Override
+    public ItemStack removeItem(int slot, int amount) {
+        ItemStack result = ContainerHelper.removeItem(this.items, slot, amount);
+        if (!result.isEmpty()) {
+            setChanged();
+        }
+        return result;
+    }
+
+    @Override
+    public ItemStack removeItemNoUpdate(int slot) {
+        return ContainerHelper.takeItem(this.items, slot);
+    }
+
+    @Override
+    public void setItem(int slot, ItemStack stack) {
+        this.items.set(slot, stack);
+        if (stack.getCount() > this.getMaxStackSize()) {
+            stack.setCount(this.getMaxStackSize());
+        }
+        setChanged();
+    }
+
+    @Override
+    public boolean stillValid(Player player) {
+        return Container.stillValidBlockEntity(this, player);
+    }
+
+    @Override
+    public void clearContent() {
+        this.items.clear();
     }
 
     public boolean toogleActive() {
@@ -70,8 +126,8 @@ public class AltarBlockEntity extends BlockEntity {
 
     @Override
     public void setChanged() {
-        BlockState state = level.getBlockState(worldPosition);
         if (level != null) {
+            BlockState state = level.getBlockState(worldPosition);
             level.sendBlockUpdated(worldPosition, state, state, 3);
         }
         super.setChanged();
@@ -128,15 +184,8 @@ public class AltarBlockEntity extends BlockEntity {
                 blockEntity.removeItem();
 
                 // Consume inputs
-                for (Ingredient ingredient : r.getInputs()) {
-                    for (int i = 0; i < usedPedestals.size(); i++) {
-                        PedestalBlockEntity ped = usedPedestals.get(i);
-                        if (ingredient.test(ped.getItem())) {
-                            ped.removeItem();
-                            usedPedestals.remove(i);
-                            break;
-                        }
-                    }
+                for (PedestalBlockEntity ped : usedPedestals) {
+                    ped.removeItem();
                 }
 
                 // Pop result
@@ -240,21 +289,20 @@ public class AltarBlockEntity extends BlockEntity {
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
-        if (!item.isEmpty()) {
-            tag.put("Item", item.save(registries));
-        } else {
-            tag.put("Item", new CompoundTag());
-        }
+        ContainerHelper.saveAllItems(tag, this.items, registries);
         tag.putBoolean("Active", Active);
     }
 
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
+        this.items.clear();
+        ContainerHelper.loadAllItems(tag, this.items, registries);
         if (tag.contains("Item")) {
-            item = ItemStack.parse(registries, tag.getCompound("Item")).orElse(ItemStack.EMPTY);
-        } else {
-            item = ItemStack.EMPTY;
+            ItemStack legacyItem = ItemStack.parse(registries, tag.getCompound("Item")).orElse(ItemStack.EMPTY);
+            if (!legacyItem.isEmpty()) {
+                setItem(0, legacyItem);
+            }
         }
         Active = tag.getBoolean("Active");
     }
