@@ -73,3 +73,30 @@ subprojects {
         }
     }
 }
+
+tasks.register('collectJars', Copy) {
+    group = 'build'
+    description = 'Copies jar files from fabric and neoforge modules to common/libs/generated'
+
+    def outputDir = project(':common').file('build/libs/generated')
+
+    from(project(':fabric').layout.buildDirectory.dir("libs"))
+    from(project(':neoforge').layout.buildDirectory.dir("libs"))
+
+    include "${rootProject.archives_name}-*-${rootProject.mod_version}.jar"
+    into outputDir
+
+    dependsOn project(':fabric').tasks.named('build')
+    dependsOn project(':neoforge').tasks.named('build')
+
+    doLast {
+        println "Copied jars to ${outputDir}"
+    }
+}
+
+// Ensure the 'build' task exists and run collectJars after it
+apply plugin: 'base'
+
+tasks.named('build').configure {
+    finalizedBy 'collectJars'
+}
