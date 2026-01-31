@@ -1,16 +1,14 @@
 modLoader = "javafml"
 loaderVersion = "[4,)"
 #issueTrackerURL = ""
-license = "Insert License Here"
+license = "All Rights Reserved"
 
 [[mods]]
 modId = "grimorium"
 version = "${version}"
 displayName = "Grimorium"
-authors = "Me!"
-description = '''
-This is an example description! Tell everyone what your mod is about!
-'''
+authors = "lucab"
+description = "Harness the forgotten arts and master ritualistic sorcery"
 logoFile = "assets/grimorium/icon.png"
 
 [[dependencies.grimorium]]
