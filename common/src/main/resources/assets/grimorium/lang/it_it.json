@@ -1,0 +1,9 @@
+{
+    "itemGroup.grimorium": "Grimorium",
+    "block.grimorium.altar": "Altare",
+    "tooltip.grimorium.altar.activate": "Usa l'acciarino per attivare",
+    "block.grimorium.pedestal": "Piedistallo",
+    "block.grimorium.grimor_ore": "Minerale di Grimor",
+    "item.grimorium.raw_grimor": "Grimor Grezzo",
+    "item.grimorium.grimor_ingot": "Lingotto di Grimor"
+}
