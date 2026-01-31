@@ -64,7 +64,7 @@ public class StandBlock extends BaseEntityBlock {
         if (!small_stand.getItem().isEmpty()) {
             Block.popResource(level, blockPos, small_stand.getItem());
         }
-
+        super.onRemove(blockState, level, blockPos, blockState2, bl);
     }
 
     @Nullable

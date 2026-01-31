@@ -15,8 +15,8 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
-public class SmallStandBlockEntityRenderer implements BlockEntityRenderer<StandBlockEntity> {
-    public SmallStandBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
+public class StandBlockEntityRenderer implements BlockEntityRenderer<StandBlockEntity> {
+    public StandBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
     }
 
     @Override
@@ -45,7 +45,7 @@ public class SmallStandBlockEntityRenderer implements BlockEntityRenderer<StandB
             poseStack.scale(0.75F, 0.75F, 0.75F);
 
             Direction facing = blockEntity.getBlockState().getValue(StandBlock.FACING);
-            poseStack.mulPose(Axis.YP.rotationDegrees(-facing.toYRot()));
+            poseStack.mulPose(Axis.YP.rotationDegrees(facing.toYRot()));
 
             int lightAbove = LevelRenderer.getLightColor(blockEntity.getLevel(), blockEntity.getBlockPos().above());
             Minecraft.getInstance().getItemRenderer().renderStatic(itemStack, ItemDisplayContext.GROUND, lightAbove,
