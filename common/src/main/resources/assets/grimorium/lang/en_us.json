@@ -5,5 +5,6 @@
     "block.grimorium.pedestal": "Pedestal",
     "block.grimorium.grimor_ore": "Grimor Ore",
     "item.grimorium.raw_grimor": "Raw Grimor",
-    "item.grimorium.grimor_ingot": "Grimor Ingot"
+    "item.grimorium.grimor_ingot": "Grimor Ingot",
+    "recipe.grimorium.altar": "Altar"
 }
