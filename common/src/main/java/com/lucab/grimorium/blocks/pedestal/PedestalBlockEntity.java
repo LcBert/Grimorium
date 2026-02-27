@@ -2,7 +2,6 @@ package com.lucab.grimorium.blocks.pedestal;
 
 import org.jetbrains.annotations.Nullable;
 
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
@@ -32,8 +31,8 @@ public class PedestalBlockEntity extends BlockEntity implements Container {
         setItem(0, item);
     }
 
-    public void removeItem() {
-        removeItem(0, 64);
+    public ItemStack removeItem() {
+        return removeItem(0, 64);
     }
 
     @Override

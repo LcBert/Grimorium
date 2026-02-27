@@ -51,8 +51,8 @@ public class AltarBlockEntity extends BlockEntity implements Container {
         setItem(0, item);
     }
 
-    public void removeItem() {
-        removeItem(0, 64);
+    public ItemStack removeItem() {
+        return removeItem(0, 64);
     }
 
     @Override

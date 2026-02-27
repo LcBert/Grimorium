@@ -61,9 +61,9 @@ public class AltarBlock extends BaseEntityBlock {
                 altar.setItem(stack.split(1));
                 return ItemInteractionResult.SUCCESS;
             } else if (!item.isEmpty()) {
-                altar.removeItem();
-                if (!player.getInventory().add(item))
-                    player.drop(item, false);
+                ItemStack removedItem = altar.removeItem();
+                if (!player.getInventory().add(removedItem))
+                    player.drop(removedItem, false);
                 return ItemInteractionResult.SUCCESS;
             }
         }

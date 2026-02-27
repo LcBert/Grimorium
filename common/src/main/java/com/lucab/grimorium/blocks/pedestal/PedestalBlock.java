@@ -35,9 +35,9 @@ public class PedestalBlock extends BaseEntityBlock {
             pedestal.setItem(stack.split(1));
             return ItemInteractionResult.SUCCESS;
         } else if (!item.isEmpty()) {
-            pedestal.removeItem();
-            if (!player.getInventory().add(item))
-                player.drop(item, false);
+            ItemStack removedItem = pedestal.removeItem();
+            if (!player.getInventory().add(removedItem))
+                player.drop(removedItem, false);
             return ItemInteractionResult.SUCCESS;
         }
 
