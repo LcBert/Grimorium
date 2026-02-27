@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.lucab.grimorium.blocks.ModBlocks;
 import com.lucab.grimorium.blocks.pedestal.PedestalBlockEntity;
 import com.lucab.grimorium.recipes.ModRecipes;
 import com.lucab.grimorium.recipes.altar.AltarRecipe;
@@ -41,7 +40,7 @@ public class AltarBlockEntity extends BlockEntity implements Container {
     private int maxProgress = 0;
 
     public AltarBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlocks.ALTAR_BLOCK_ENTITY.get(), pos, state);
+        super(AltarRegister.ALTAR_BLOCK_ENTITY.get(), pos, state);
     }
 
     public ItemStack getItem() {

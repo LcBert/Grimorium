@@ -1,6 +1,5 @@
 package com.lucab.grimorium.blocks.altar;
 
-import com.lucab.grimorium.blocks.ModBlocks;
 import com.mojang.serialization.MapCodec;
 
 import net.minecraft.core.BlockPos;
@@ -38,7 +37,7 @@ public class AltarBlock extends BaseEntityBlock {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state,
             BlockEntityType<T> type) {
-        return createTickerHelper(type, ModBlocks.ALTAR_BLOCK_ENTITY.get(), AltarBlockEntity::tick);
+        return createTickerHelper(type, AltarRegister.ALTAR_BLOCK_ENTITY.get(), AltarBlockEntity::tick);
     }
 
     @Override

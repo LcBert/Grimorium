@@ -1,7 +1,7 @@
 package com.lucab.grimorium.client.jei;
 
 import com.lucab.grimorium.Grimorium;
-import com.lucab.grimorium.blocks.ModBlocks;
+import com.lucab.grimorium.blocks.altar.AltarRegister;
 import com.lucab.grimorium.recipes.ModRecipes;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -39,6 +39,6 @@ public class GrimoriumJeiPlugin implements IModPlugin {
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        registration.addRecipeCatalyst(new ItemStack(ModBlocks.ALTAR_BLOCK.get()), AltarRecipeCategory.RECIPE_TYPE);
+        registration.addRecipeCatalyst(new ItemStack(AltarRegister.ALTAR_BLOCK.get()), AltarRecipeCategory.RECIPE_TYPE);
     }
 }

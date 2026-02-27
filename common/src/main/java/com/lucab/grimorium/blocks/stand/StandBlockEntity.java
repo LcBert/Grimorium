@@ -2,8 +2,6 @@ package com.lucab.grimorium.blocks.stand;
 
 import org.jetbrains.annotations.Nullable;
 
-import com.lucab.grimorium.blocks.ModBlocks;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -18,7 +16,7 @@ public class StandBlockEntity extends BlockEntity {
     private ItemStack item = ItemStack.EMPTY;
 
     public StandBlockEntity(BlockPos blockPos, BlockState blockState) {
-        super(ModBlocks.STAND_BLOCK_ENTITY.get(), blockPos, blockState);
+        super(StandRegister.STAND_BLOCK_ENTITY.get(), blockPos, blockState);
     }
 
     public void setItem(ItemStack item) {

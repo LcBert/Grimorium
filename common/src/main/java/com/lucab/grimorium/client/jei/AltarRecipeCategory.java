@@ -1,7 +1,7 @@
 package com.lucab.grimorium.client.jei;
 
 import com.lucab.grimorium.Grimorium;
-import com.lucab.grimorium.blocks.ModBlocks;
+import com.lucab.grimorium.blocks.altar.AltarRegister;
 import com.lucab.grimorium.recipes.altar.AltarRecipe;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -40,7 +40,7 @@ public class AltarRecipeCategory implements IRecipeCategory<AltarRecipe> {
         this.slot = helper.getSlotDrawable();
         this.arrow = helper.createAnimatedRecipeArrow(100);
         this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK,
-                new ItemStack(ModBlocks.ALTAR_BLOCK.get()));
+                new ItemStack(AltarRegister.ALTAR_BLOCK.get()));
     }
 
     @Override

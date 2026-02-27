@@ -2,7 +2,6 @@ package com.lucab.grimorium.blocks.pedestal;
 
 import org.jetbrains.annotations.Nullable;
 
-import com.lucab.grimorium.blocks.ModBlocks;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -22,7 +21,7 @@ public class PedestalBlockEntity extends BlockEntity implements Container {
     private final NonNullList<ItemStack> items = NonNullList.withSize(1, ItemStack.EMPTY);
 
     public PedestalBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlocks.PEDESTAL_BLOCK_ENTITY.get(), pos, state);
+        super(PedestalRegister.PEDESTAL_BLOCK_ENTITY.get(), pos, state);
     }
 
     public ItemStack getItem() {
