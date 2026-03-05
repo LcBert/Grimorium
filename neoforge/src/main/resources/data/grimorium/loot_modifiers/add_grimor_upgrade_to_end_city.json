@@ -1,0 +1,14 @@
+{
+  "type": "grimorium:add_item",
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:chests/end_city_treasure"
+    },
+    {
+      "condition": "minecraft:random_chance",
+      "chance": 0.15
+    }
+  ],
+  "item": "grimorium:grimor_upgrade_smithing_template"
+}
