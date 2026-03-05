@@ -1,0 +1,16 @@
+{
+    "variants": {
+        "axis=x": {
+            "model": "grimorium:block/arcane_log_horizontal",
+            "x": 90,
+            "y": 90
+        },
+        "axis=y": {
+            "model": "grimorium:block/arcane_log"
+        },
+        "axis=z": {
+            "model": "grimorium:block/arcane_log_horizontal",
+            "x": 90
+        }
+    }
+}

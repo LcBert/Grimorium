@@ -21,6 +21,9 @@
         "client": [
             "com.lucab.grimorium.fabric.client.GrimoriumFabricClient"
         ],
+        "terrablender": [
+            "com.lucab.grimorium.fabric.ModTerraBlender"
+        ],
         "jei_mod_plugin": [
             "com.lucab.grimorium.client.jei.GrimoriumJeiPlugin"
         ]
@@ -33,7 +36,8 @@
         "minecraft": "~1.21.1",
         "java": ">=21",
         "architectury": ">=13.0.8",
-        "fabric-api": "*"
+        "fabric-api": "*",
+        "terrablender": "*"
     },
     "suggests": {
         "another-mod": "*"

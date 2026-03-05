@@ -35,6 +35,13 @@ dependencies {
 
     modCompileOnly "mezz.jei:jei-$rootProject.minecraft_version-common-api:$rootProject.jei_version"
     modLocalRuntime "mezz.jei:jei-$rootProject.minecraft_version-fabric:$rootProject.jei_version"
+    
+    // TerraBlender
+    modImplementation "maven.modrinth:terrablender:XNtIBXyQ"
+    implementation "com.electronwill.night-config:core:3.6.4"
+    implementation "com.electronwill.night-config:toml:3.6.4"
+    include "com.electronwill.night-config:core:3.6.4"
+    include "com.electronwill.night-config:toml:3.6.4"
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive = false }
     shadowBundle project(path: ':common', configuration: 'transformProductionFabric')

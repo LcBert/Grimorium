@@ -1,8 +1,6 @@
 {
     "replace": false,
     "values": [
-        "grimorium:stand",
-        "grimorium:arcane_log",
         "grimorium:arcane_planks"
     ]
 }

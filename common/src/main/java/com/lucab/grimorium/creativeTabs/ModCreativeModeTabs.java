@@ -25,6 +25,10 @@ public class ModCreativeModeTabs {
                     .icon(() -> new ItemStack(ModItems.GRIMOR_INGOT.get()))
                     .displayItems((parameters, output) -> {
                         output.accept(ModBlocks.GRIMOR_ORE_ITEM.get());
+                        output.accept(ModBlocks.ARCANE_LOG_ITEM.get());
+                        output.accept(ModBlocks.ARCANE_PLANKS_ITEM.get());
+                        output.accept(ModBlocks.ARCANE_LEAVES_ITEM.get());
+                        output.accept(ModBlocks.ARCANE_SAPLING_ITEM.get());
                         output.accept(ModItems.GRIMOR_SCRAP.get());
                         output.accept(ModItems.GRIMOR_INGOT.get());
                         output.accept(ModItems.GRIMOR_SWORD.get());

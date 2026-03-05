@@ -34,3 +34,10 @@ side = "BOTH"
 
 [[mixins]]
 config = "grimorium.mixins.json"
+
+[[dependencies.grimorium]]
+modId = "terrablender"
+type = "required"
+versionRange = "[4.1.0,)"
+ordering = "AFTER"
+side = "BOTH"
