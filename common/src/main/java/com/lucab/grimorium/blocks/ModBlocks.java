@@ -2,7 +2,6 @@ package com.lucab.grimorium.blocks;
 
 import com.lucab.grimorium.Grimorium;
 import com.lucab.grimorium.blocks.altar.AltarRegister;
-import com.lucab.grimorium.blocks.padlock.PadlockRegister;
 import com.lucab.grimorium.blocks.pedestal.PedestalRegister;
 import com.lucab.grimorium.blocks.stand.StandRegister;
 import com.lucab.grimorium.items.ModItems;
@@ -40,6 +39,5 @@ public class ModBlocks {
         AltarRegister.register();
         PedestalRegister.register();
         StandRegister.register();
-        PadlockRegister.register();
     }
 }

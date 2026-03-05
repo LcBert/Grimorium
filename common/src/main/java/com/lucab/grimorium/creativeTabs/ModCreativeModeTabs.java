@@ -2,7 +2,6 @@ package com.lucab.grimorium.creativeTabs;
 
 import com.lucab.grimorium.blocks.altar.AltarRegister;
 import com.lucab.grimorium.blocks.pedestal.PedestalRegister;
-import com.lucab.grimorium.blocks.padlock.PadlockRegister;
 import com.lucab.grimorium.blocks.stand.StandRegister;
 import com.lucab.grimorium.Grimorium;
 import com.lucab.grimorium.items.ModItems;
@@ -36,8 +35,6 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.GRIMOR_UPGRADE_SMITHING_TEMPLATE.get());
                         output.accept(AltarRegister.ALTAR_ITEM.get());
                         output.accept(PedestalRegister.PEDESTAL_ITEM.get());
-                        output.accept(PadlockRegister.PADLOCK_ITEM.get());
-                        output.accept(ModItems.PADLOCK_KEY.get());
                         output.accept(StandRegister.STAND_ITEM.get());
                     }).build());
 
