@@ -1,0 +1,24 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "pattern": [
+        "ABA",
+        "ACA",
+        "AAA"
+    ],
+    "key": {
+        "A": {
+            "item": "minecraft:netherite_ingot"
+        },
+        "B": {
+            "item": "grimorium:grimor_upgrade_smithing_template"
+        },
+        "C": {
+            "item": "minecraft:end_stone"
+        }
+    },
+    "result": {
+        "count": 2,
+        "id": "grimorium:grimor_upgrade_smithing_template"
+    }
+}
