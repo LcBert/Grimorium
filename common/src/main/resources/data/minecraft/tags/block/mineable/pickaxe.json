@@ -3,6 +3,7 @@
     "values": [
         "grimorium:grimor_ore",
         "grimorium:altar",
-        "grimorium:pedestal"
+        "grimorium:pedestal",
+        "grimorium:padlock"
     ]
 }
