@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "pattern": [
+        "AAA",
+        "B C"
+    ],
+    "key": {
+        "A": {
+            "tag": "minecraft:logs"
+        },
+        "B": {
+            "item": "minecraft:stick"
+        },
+        "C": {
+            "item": "minecraft:chain"
+        }
+    },
+    "result": {
+        "count": 1,
+        "id": "grimorium:stand"
+    }
+}

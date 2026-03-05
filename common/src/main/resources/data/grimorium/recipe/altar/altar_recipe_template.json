@@ -1,0 +1,16 @@
+{
+    "type": "grimorium:altar",
+    "processTime": 40,
+    "catalyst": {
+        "item": "<catalyst>"
+    },
+    "inputs": [
+        {
+            "item": "<input> (up to 8)"
+        }
+    ],
+    "result": {
+        "id": "<result>",
+        "count": 1
+    }
+}

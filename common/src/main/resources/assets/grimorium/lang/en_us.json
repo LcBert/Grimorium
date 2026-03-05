@@ -4,6 +4,8 @@
     "tooltip.grimorium.altar.activate": "Use Flint and Steel to activate",
     "block.grimorium.pedestal": "Pedestal",
     "block.grimorium.grimor_ore": "Grimor Ore",
+    "block.grimorium.padlock": "Padlock",
+    "block.grimorium.stand": "Stand",
     "item.grimorium.grimor_scrap": "Grimor Scrap",
     "item.grimorium.grimor_ingot": "Grimor Ingot",
     "item.grimorium.grimor_sword": "Grimor Sword",
@@ -11,11 +13,12 @@
     "item.grimorium.grimor_axe": "Grimor Axe",
     "item.grimorium.grimor_shovel": "Grimor Shovel",
     "item.grimorium.grimor_hoe": "Grimor Hoe",
+    "item.grimorium.padlock_key": "Padlock Key",
     "item.grimorium.grimor_upgrade_smithing_template": "Grimor Smithing Template",
     "tooltip.grimorium.upgrade_applies_to": "Netherite Equipment",
     "tooltip.grimorium.upgrade_ingredients": "Grimor Ingot",
     "tooltip.grimorium.upgrade_title": "Grimor Upgrade",
-    "tooltip.grimorium.upgrade_base_slot_description": "Add netherite armor, weapon, or tool",
+    "tooltip.grimorium.upgrade_base_slot_description": "Add netherite armor, weapon or tool",
     "tooltip.grimorium.upgrade_additions_slot_description": "Add Grimor Ingot",
     "recipe.grimorium.altar": "Altar"
 }
