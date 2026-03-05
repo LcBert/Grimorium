@@ -26,8 +26,14 @@ public class ModCreativeModeTabs {
                     .icon(() -> new ItemStack(ModItems.GRIMOR_INGOT.get()))
                     .displayItems((parameters, output) -> {
                         output.accept(ModBlocks.GRIMOR_ORE_ITEM.get());
-                        output.accept(ModItems.RAW_GRIMOR.get());
+                        output.accept(ModItems.GRIMOR_SCRAP.get());
                         output.accept(ModItems.GRIMOR_INGOT.get());
+                        output.accept(ModItems.GRIMOR_SWORD.get());
+                        output.accept(ModItems.GRIMOR_PICKAXE.get());
+                        output.accept(ModItems.GRIMOR_AXE.get());
+                        output.accept(ModItems.GRIMOR_SHOVEL.get());
+                        output.accept(ModItems.GRIMOR_HOE.get());
+                        output.accept(ModItems.GRIMOR_UPGRADE_SMITHING_TEMPLATE.get());
                         output.accept(AltarRegister.ALTAR_ITEM.get());
                         output.accept(PedestalRegister.PEDESTAL_ITEM.get());
                         output.accept(PadlockRegister.PADLOCK_ITEM.get());

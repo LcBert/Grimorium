@@ -7,7 +7,7 @@
             "entries": [
                 {
                     "type": "minecraft:item",
-                    "name": "grimorium:raw_grimor"
+                    "name": "grimorium:grimor_scrap"
                 }
             ],
             "conditions": [

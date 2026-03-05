@@ -1,0 +1,35 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "grimor_ingot",
+    "ingredients": [
+        {
+            "item": "grimorium:grimor_scrap"
+        },
+        {
+            "item": "grimorium:grimor_scrap"
+        },
+        {
+            "item": "grimorium:grimor_scrap"
+        },
+        {
+            "item": "grimorium:grimor_scrap"
+        },
+        {
+            "item": "minecraft:diamond"
+        },
+        {
+            "item": "minecraft:diamond"
+        },
+        {
+            "item": "minecraft:diamond"
+        },
+        {
+            "item": "minecraft:diamond"
+        }
+    ],
+    "result": {
+        "count": 1,
+        "id": "grimorium:grimor_ingot"
+    }
+}

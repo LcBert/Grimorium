@@ -1,6 +1,6 @@
 {
     "parent": "minecraft:item/generated",
     "textures": {
-        "layer0": "grimorium:item/raw_grimor"
+        "layer0": "grimorium:item/grimor_scrap"
     }
 }
