@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "/W/",
+        "/W/"
+    ],
+    "key": {
+        "W": {
+            "item": "grimorium:arcane_planks"
+        },
+        "/": {
+            "item": "minecraft:stick"
+        }
+    },
+    "result": {
+        "item": "grimorium:arcane_fence_gate",
+        "count": 1
+    }
+}

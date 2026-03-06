@@ -19,9 +19,14 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.FenceBlock;
+import net.minecraft.world.level.block.FenceGateBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SaplingBlock;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.block.grower.TreeGrower;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -107,6 +112,30 @@ public class ModBlocks {
                     .strength(2.0F, 3.0F)
                     .sound(SoundType.WOOD)));
 
+    public static final RegistrySupplier<Block> ARCANE_SLAB = BLOCKS.register(
+            "arcane_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.of()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)));
+
+    public static final RegistrySupplier<Block> ARCANE_STAIRS = BLOCKS.register(
+            "arcane_stairs",
+            () -> new StairBlock(ARCANE_PLANKS.get().defaultBlockState(), BlockBehaviour.Properties.of()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)));
+
+    public static final RegistrySupplier<Block> ARCANE_FENCE = BLOCKS.register(
+            "arcane_fence",
+            () -> new FenceBlock(BlockBehaviour.Properties.of()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)));
+
+    public static final RegistrySupplier<Block> ARCANE_FENCE_GATE = BLOCKS.register(
+            "arcane_fence_gate",
+            () -> new FenceGateBlock(WoodType.OAK, BlockBehaviour.Properties.of()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)));
+
     public static final RegistrySupplier<Item> GRIMOR_ORE_ITEM = ModItems.ITEMS
             .register("grimor_ore",
                     () -> new BlockItem(GRIMOR_ORE.get(), new Item.Properties()));
@@ -126,6 +155,22 @@ public class ModBlocks {
     public static final RegistrySupplier<Item> ARCANE_PLANKS_ITEM = ModItems.ITEMS
             .register("arcane_planks",
                     () -> new BlockItem(ARCANE_PLANKS.get(), new Item.Properties()));
+
+    public static final RegistrySupplier<Item> ARCANE_SLAB_ITEM = ModItems.ITEMS
+            .register("arcane_slab",
+                    () -> new BlockItem(ARCANE_SLAB.get(), new Item.Properties()));
+
+    public static final RegistrySupplier<Item> ARCANE_STAIRS_ITEM = ModItems.ITEMS
+            .register("arcane_stairs",
+                    () -> new BlockItem(ARCANE_STAIRS.get(), new Item.Properties()));
+
+    public static final RegistrySupplier<Item> ARCANE_FENCE_ITEM = ModItems.ITEMS
+            .register("arcane_fence",
+                    () -> new BlockItem(ARCANE_FENCE.get(), new Item.Properties()));
+
+    public static final RegistrySupplier<Item> ARCANE_FENCE_GATE_ITEM = ModItems.ITEMS
+            .register("arcane_fence_gate",
+                    () -> new BlockItem(ARCANE_FENCE_GATE.get(), new Item.Properties()));
 
     public static void register() {
         BLOCKS.register();

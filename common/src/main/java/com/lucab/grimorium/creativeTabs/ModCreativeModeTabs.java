@@ -27,6 +27,10 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.GRIMOR_ORE_ITEM.get());
                         output.accept(ModBlocks.ARCANE_LOG_ITEM.get());
                         output.accept(ModBlocks.ARCANE_PLANKS_ITEM.get());
+                        output.accept(ModBlocks.ARCANE_SLAB_ITEM.get());
+                        output.accept(ModBlocks.ARCANE_STAIRS_ITEM.get());
+                        output.accept(ModBlocks.ARCANE_FENCE_ITEM.get());
+                        output.accept(ModBlocks.ARCANE_FENCE_GATE_ITEM.get());
                         output.accept(ModBlocks.ARCANE_LEAVES_ITEM.get());
                         output.accept(ModBlocks.ARCANE_SAPLING_ITEM.get());
                         output.accept(ModItems.GRIMOR_SCRAP.get());

@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "pattern": [
+        "###"
+    ],
+    "key": {
+        "#": {
+            "item": "grimorium:arcane_planks"
+        }
+    },
+    "result": {
+        "id": "grimorium:arcane_slab",
+        "count": 6
+    }
+}

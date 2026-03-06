@@ -1,0 +1,13 @@
+{
+    "variants": {
+        "type=bottom": {
+            "model": "grimorium:block/arcane_slab"
+        },
+        "type=double": {
+            "model": "grimorium:block/arcane_planks"
+        },
+        "type=top": {
+            "model": "grimorium:block/arcane_slab_top"
+        }
+    }
+}

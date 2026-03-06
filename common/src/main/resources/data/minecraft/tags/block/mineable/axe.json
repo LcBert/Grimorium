@@ -3,6 +3,10 @@
     "values": [
         "grimorium:stand",
         "grimorium:arcane_log",
-        "grimorium:arcane_planks"
+        "grimorium:arcane_planks",
+        "grimorium:arcane_slab",
+        "grimorium:arcane_stairs",
+        "grimorium:arcane_fence",
+        "grimorium:arcane_fence_gate"
     ]
 }

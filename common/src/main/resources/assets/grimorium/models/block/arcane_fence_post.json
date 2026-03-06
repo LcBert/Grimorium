@@ -1,0 +1,6 @@
+{
+    "parent": "minecraft:block/fence_post",
+    "textures": {
+        "texture": "grimorium:block/arcane_planks"
+    }
+}
